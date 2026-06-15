@@ -4,9 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>God's Creative Events — Luxury Wedding & Event Planning, Aba Nigeria</title>
-  <link rel="icon" type="image/png" href="images/logo.png" />
-  <link rel="apple-touch-icon" href="images/logo.png" />
-  <link rel="shortcut icon" href="images/logo.png" />
   <link
     href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Poppins:wght@300;400;500&display=swap"
     rel="stylesheet"
@@ -96,7 +93,7 @@
     }
     .btn-ghost:hover { border-color: #fff; background: rgba(255, 255, 255, 0.08); }
 
-    /* Scroll-triggered fade-up */
+    /* Scroll-triggered fade-up — JS adds .is-visible */
     .reveal {
       opacity: 0;
       transform: translateY(30px);
@@ -116,9 +113,8 @@
       align-items: center;
       justify-content: space-between;
       padding: 28px var(--section-padding-x);
-      background: #fff;
-      box-shadow: 0 1px 0 rgba(28, 28, 28, 0.07);
-      transition: padding 0.5s ease;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.45), transparent);
+      transition: background 0.6s ease, padding 0.5s ease;
     }
 
     .site-nav.is-scrolled {
@@ -134,11 +130,10 @@
       width: auto;
       max-width: 180px;
       object-fit: contain;
-      transition: height 0.5s;
+      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
+      transition: filter 0.5s, height 0.5s;
     }
-    .site-nav.is-scrolled .nav-logo img {
-      height: 52px;
-    }
+    .site-nav.is-scrolled .nav-logo img { filter: none; height: 52px; }
 
     .nav-links {
       display: flex;
@@ -150,9 +145,10 @@
       letter-spacing: 0.15em;
       text-transform: uppercase;
       text-decoration: none;
-      color: var(--color-charcoal);
+      color: rgba(255, 246, 237, 0.85);
       transition: color 0.4s;
     }
+    .site-nav.is-scrolled .nav-links a { color: var(--color-charcoal); }
     .nav-links a:hover { color: var(--color-rose); }
 
     .nav-cta {
@@ -160,67 +156,23 @@
       letter-spacing: 0.18em;
       text-transform: uppercase;
       text-decoration: none;
-      border: 1px solid var(--color-rose);
-      color: var(--color-charcoal);
+      border: 1px solid rgba(255, 246, 237, 0.5);
+      color: var(--color-cream);
       padding: 10px 22px;
       transition: all 0.4s;
     }
+    .site-nav.is-scrolled .nav-cta { border-color: var(--color-rose); color: var(--color-charcoal); }
     .nav-cta:hover { background: var(--color-rose); border-color: var(--color-rose); color: #fff; }
 
-    .nav-hamburger { display: none; flex-direction: column; gap: 6px; cursor: pointer; z-index: 101; padding: 8px; }
-    .nav-hamburger span { display: block; width: 28px; height: 2px; background: var(--color-charcoal); border-radius: 2px; transition: background 0.4s; }
-
-    /* Mobile nav drawer */
-    .mobile-nav-drawer {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: #fff;
-      z-index: 99;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 36px;
-    }
-    .mobile-nav-drawer.is-open { display: flex; }
-    .mobile-nav-drawer a {
-      font-size: 1.4rem;
-      font-family: var(--font-serif);
-      color: var(--color-charcoal);
-      text-decoration: none;
-      letter-spacing: 0.05em;
-      transition: color 0.3s;
-    }
-    .mobile-nav-drawer a:hover { color: var(--color-rose); }
-    .mobile-nav-drawer .mobile-cta {
-      margin-top: 10px;
-      background: var(--color-rose);
-      color: #fff;
-      padding: 14px 36px;
-      font-family: var(--font-sans);
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      text-decoration: none;
-    }
-    .mobile-nav-close {
-      position: absolute;
-      top: 28px;
-      right: 24px;
-      font-size: 1.8rem;
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: var(--color-charcoal);
-      line-height: 1;
-    }
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .nav-hamburger span { display: block; width: 24px; height: 1px; background: var(--color-cream); transition: background 0.4s; }
+    .site-nav.is-scrolled .nav-hamburger span { background: var(--color-charcoal); }
 
     /* ─── Hero ───────────────────────────────────────────────────────────────── */
-    /* FIX: Redesigned hero — centered layout like Eventigo */
     #hero {
       position: relative;
       height: 100vh;
-      min-height: 600px;
+      min-height: 640px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -228,136 +180,160 @@
       text-align: center;
     }
 
-    .hero-slideshow { position: absolute; inset: 0; }
-
-    .hero-slide {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      transition: opacity 1.6s cubic-bezier(0.4, 0, 0.2, 1);
-      will-change: opacity;
-    }
-    .hero-slide.is-active { opacity: 1; }
-
-    .hero-slide__bg {
+    /* Full-bleed background image with dark overlay */
+    .hero__bg {
       position: absolute;
       inset: -6%;
+      background-image: url('images/hero-slide-01-luxury-wedding.jpg');
       background-size: cover;
       background-position: center;
-      animation: kenBurns 8s ease-in-out infinite alternate;
+      animation: kenBurns 14s ease-in-out infinite alternate;
     }
-    .hero-slide.is-active .hero-slide__bg  { animation-play-state: running; }
-    .hero-slide:not(.is-active) .hero-slide__bg { animation-play-state: paused; }
 
-    .hero-slide__overlay {
+    .hero__overlay {
       position: absolute;
       inset: 0;
-      background: rgba(10, 8, 6, 0.55);
+      background: rgba(10, 8, 7, 0.58);
     }
 
-    /* Centered hero content */
-    .hero-content {
+    /* Content sits above background */
+    .hero__content {
       position: relative;
       z-index: 2;
       padding: 0 var(--section-padding-x);
       max-width: 860px;
-      width: 100%;
-      animation: fadeUp 1.4s var(--ease-out-expo) 0.3s both;
+      animation: fadeUp 1.2s var(--ease-out-expo) 0.2s both;
     }
 
-    /* Rotating text line — "Let's Celebrate Your [Wedding / Birthday / ...]" */
-    .hero-intro-line {
-      font-size: clamp(0.9rem, 1.8vw, 1.15rem);
-      letter-spacing: 0.06em;
-      color: rgba(255, 246, 237, 0.75);
-      font-weight: 300;
-      margin-bottom: 22px;
-      min-height: 1.6em;
-    }
-
-    .hero-rotating-word {
+    .hero__pre-heading {
+      font-size: 0.72rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
       color: var(--color-rose);
-      font-weight: 400;
-      display: inline-block;
-      opacity: 0;
-      transform: translateY(12px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-    .hero-rotating-word.is-visible {
-      opacity: 1;
-      transform: translateY(0);
+      margin-bottom: 28px;
+      display: block;
     }
 
-    .hero-headline {
+    /* "Let's Celebrate Your ___" headline */
+    .hero__headline {
       font-family: var(--font-serif);
-      font-size: clamp(2.8rem, 6vw, 5.5rem);
+      font-size: clamp(2.8rem, 6vw, 5.2rem);
       font-weight: 400;
       line-height: 1.1;
       color: #fff;
-      margin-bottom: 24px;
+      margin-bottom: 28px;
     }
-    .hero-headline em { font-style: italic; color: #f0cfc3; }
 
-    .hero-subline {
-      font-size: 0.9rem;
-      line-height: 1.8;
-      color: rgba(255, 246, 237, 0.72);
-      max-width: 500px;
+    /* The cycling word — slides up and fades */
+    .hero__headline .hero__cycling-word {
+      display: inline-block;
+      color: var(--color-rose);
+      font-style: italic;
+      overflow: hidden;
+      vertical-align: bottom;
+      min-width: 260px;
+    }
+
+    .hero__cycling-word-inner {
+      display: block;
+      animation: none;
+    }
+
+    .hero__cycling-word-inner.is-leaving {
+      animation: wordLeave 0.45s var(--ease-out-expo) forwards;
+    }
+
+    .hero__cycling-word-inner.is-entering {
+      animation: wordEnter 0.45s var(--ease-out-expo) forwards;
+    }
+
+    .hero__subline {
+      font-size: 0.92rem;
+      line-height: 1.85;
+      color: rgba(255, 246, 237, 0.7);
+      max-width: 540px;
       margin: 0 auto 44px;
       letter-spacing: 0.02em;
     }
 
-    .hero-actions {
+    .hero__actions {
       display: flex;
       gap: 18px;
-      flex-wrap: wrap;
       justify-content: center;
+      flex-wrap: wrap;
+      align-items: center;
     }
 
-    /* Slide nav — dots */
-    .hero-dots {
+    /* "Watch Intro" pill button */
+    .hero__watch-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: rgba(255, 246, 237, 0.85);
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: color 0.35s;
+    }
+    .hero__watch-btn:hover { color: #fff; }
+
+    .hero__watch-btn:hover .hero__play-icon { background: var(--color-rose); }
+
+    .hero__play-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 246, 237, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.35s, border-color 0.35s;
+      flex-shrink: 0;
+    }
+
+    .hero__play-icon svg {
+      width: 14px;
+      height: 14px;
+      fill: #fff;
+      margin-left: 2px; /* optical centre for triangle */
+    }
+
+    /* Scroll cue at bottom */
+    .hero__scroll-cue {
       position: absolute;
-      bottom: 38px;
+      bottom: 36px;
       left: 50%;
       transform: translateX(-50%);
-      display: flex;
-      gap: 10px;
-      z-index: 3;
-    }
-
-    .hero-dot {
-      width: 28px;
-      height: 2px;
-      background: rgba(255, 246, 237, 0.3);
-      cursor: pointer;
-      transition: background 0.5s, width 0.5s;
-    }
-    .hero-dot.is-active { background: var(--color-rose); width: 48px; }
-
-    .hero-arrow { display: none; }
-
-    .hero-scroll-indicator {
-      position: absolute;
-      bottom: 38px;
-      right: var(--section-padding-x);
+      z-index: 2;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
-      z-index: 2;
+      gap: 8px;
     }
-    .hero-scroll-indicator span {
-      font-size: 0.6rem;
-      letter-spacing: 0.22em;
+
+    .hero__scroll-cue span {
+      font-size: 0.58rem;
+      letter-spacing: 0.26em;
       text-transform: uppercase;
-      color: rgba(255, 246, 237, 0.5);
-      writing-mode: vertical-rl;
+      color: rgba(255, 246, 237, 0.4);
     }
-    .hero-scroll-indicator__line {
+
+    .hero__scroll-cue__line {
       width: 1px;
-      height: 50px;
-      background: linear-gradient(to bottom, rgba(255, 246, 237, 0.5), transparent);
+      height: 44px;
+      background: linear-gradient(to bottom, rgba(255, 246, 237, 0.45), transparent);
       animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    /* Word cycling keyframes */
+    @keyframes wordLeave {
+      from { opacity: 1; transform: translateY(0); }
+      to   { opacity: 0; transform: translateY(-100%); }
+    }
+    @keyframes wordEnter {
+      from { opacity: 0; transform: translateY(60%); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
     /* ─── About ──────────────────────────────────────────────────────────────── */
@@ -424,73 +400,40 @@
     /* ─── Services ───────────────────────────────────────────────────────────── */
     #services { background: var(--color-offwhite); }
 
-    .services-header { text-align: center; max-width: 660px; margin: 0 auto 64px; }
+    .services-header { text-align: center; max-width: 560px; margin: 0 auto 72px; }
 
-    .services-grid {
+    .services-list { max-width: 900px; margin: 0 auto; }
+
+    .service-item {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      max-width: 1100px;
-      margin: 0 auto;
+      grid-template-columns: 80px 1fr;
+      gap: 0 32px;
+      padding: 36px 0;
+      border-top: 1px solid rgba(28, 28, 28, 0.08);
+      align-items: start;
     }
+    .service-item:last-child { border-bottom: 1px solid rgba(28, 28, 28, 0.08); }
+    .service-item:hover .service-item__title { color: var(--color-brown); }
 
-    .service-card {
-      background: #fff;
-      border-radius: 16px;
-      padding: 40px 32px;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.4s var(--ease-out-expo), box-shadow 0.4s;
-      cursor: default;
-    }
-    .service-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 40px rgba(28, 28, 28, 0.1);
-    }
-
-    /* First card — highlighted in rose */
-    .service-card--featured {
-      background: var(--color-rose);
-    }
-    .service-card--featured .service-card__title { color: #fff; }
-    .service-card--featured .service-card__desc  { color: rgba(255,255,255,0.82); }
-    .service-card--featured .service-card__icon-wrap {
-      border-color: rgba(255,255,255,0.4);
-      background: rgba(255,255,255,0.15);
-    }
-    .service-card--featured .service-card__icon { color: #fff; }
-
-    .service-card__icon-wrap {
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      border: 2px solid rgba(217, 161, 167, 0.4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 22px;
-    }
-
-    .service-card__icon {
-      font-size: 1.4rem;
-      color: var(--color-rose);
-      line-height: 1;
-    }
-
-    .service-card__title {
+    .service-item__num {
       font-family: var(--font-serif);
-      font-size: 1.15rem;
+      font-style: italic;
+      font-size: 1.8rem;
+      color: rgba(184, 155, 138, 0.35);
+      line-height: 1;
+      padding-top: 4px;
+    }
+
+    .service-item__title {
+      font-family: var(--font-serif);
+      font-size: 1.35rem;
       font-weight: 500;
       color: var(--color-charcoal);
-      margin-bottom: 12px;
-      line-height: 1.3;
+      margin-bottom: 10px;
+      transition: color 0.4s;
     }
 
-    .service-card__desc {
-      font-size: 0.78rem;
-      line-height: 1.85;
-      color: #999;
-    }
+    .service-item__desc { font-size: 0.82rem; line-height: 1.85; color: #777; max-width: 520px; }
 
     /* ─── Portfolio ──────────────────────────────────────────────────────────── */
     #portfolio { background: var(--color-cream); padding: var(--section-padding-y) 0; }
@@ -539,6 +482,7 @@
       color: rgba(255, 246, 237, 0.7);
     }
 
+    /* Editorial grid positions */
     .portfolio-item--a { grid-column: 1/8;  grid-row: 1/7;  }
     .portfolio-item--b { grid-column: 8/13; grid-row: 1/5;  }
     .portfolio-item--c { grid-column: 8/11; grid-row: 5/9;  }
@@ -784,64 +728,274 @@
     .form-note { font-size: 0.68rem; color: #aaa; margin-top: 12px; }
 
     /* ─── Footer ─────────────────────────────────────────────────────────────── */
-    .site-footer { background: var(--color-charcoal); padding: 72px var(--section-padding-x) 40px; }
+    /* ─── Footer ─────────────────────────────────────────────────────────────── */
+    .site-footer {
+      background: #0d1b2a;
+      padding: 80px var(--section-padding-x) 0;
+    }
 
     .footer-top {
       display: grid;
-      grid-template-columns: 1.6fr 1fr 1fr 1fr;
+      grid-template-columns: 1.4fr 1fr 1.2fr 1.4fr;
       gap: 48px;
-      margin-bottom: 64px;
+      padding-bottom: 64px;
     }
 
     .footer-logo img {
-      height: 40px;
+      height: 72px;
       width: auto;
       object-fit: contain;
       display: block;
-      margin-bottom: 16px;
-      /* FIX: Inverted so logo shows white on dark footer */
-      filter: brightness(0) invert(1);
-      opacity: 0.85;
-    }
-
-    .footer-tagline { font-size: 0.78rem; line-height: 1.85; color: rgba(255, 246, 237, 0.4); max-width: 240px; }
-
-    .footer-col-title {
-      font-size: 0.62rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--color-rose);
       margin-bottom: 20px;
     }
 
-    .footer-nav-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-    .footer-nav-list a { font-size: 0.78rem; color: rgba(255, 246, 237, 0.5); text-decoration: none; transition: color 0.35s; }
-    .footer-nav-list a:hover { color: var(--color-cream); }
+    .footer-tagline {
+      font-size: 0.82rem;
+      line-height: 1.85;
+      color: rgba(255, 255, 255, 0.55);
+      max-width: 260px;
+    }
 
-    .footer-contact-item { font-size: 0.78rem; color: rgba(255, 246, 237, 0.5); margin-bottom: 12px; line-height: 1.6; }
+    .footer-col-title {
+      font-family: var(--font-serif);
+      font-size: 1.35rem;
+      font-weight: 500;
+      color: #fff;
+      margin-bottom: 28px;
+    }
 
-    .footer-bottom {
-      border-top: 1px solid rgba(255, 246, 237, 0.08);
-      padding-top: 28px;
+    .footer-nav-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    .footer-nav-list a {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.6);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .footer-nav-list a:hover { color: #fff; }
+
+    .footer-connect-item {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 16px;
-    }
-
-    .footer-copy { font-size: 0.68rem; color: rgba(255, 246, 237, 0.3); }
-
-    .footer-socials { display: flex; gap: 22px; }
-    .footer-socials a {
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(255, 246, 237, 0.35);
+      gap: 12px;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 14px;
       text-decoration: none;
-      transition: color 0.35s;
+      transition: color 0.3s;
     }
-    .footer-socials a:hover { color: var(--color-rose); }
+    .footer-connect-item:hover { color: #fff; }
+    .footer-connect-item svg { width: 18px; height: 18px; fill: var(--color-rose); flex-shrink: 0; }
+
+    /* Social icon circles */
+    .footer-social-icons { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
+    .footer-social-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--color-rose);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: 0.65rem;
+      font-weight: 500;
+      color: #fff;
+      letter-spacing: 0;
+      transition: background 0.3s, transform 0.3s;
+      flex-shrink: 0;
+    }
+    .footer-social-icon:hover { background: var(--color-rose-dark); transform: translateY(-2px); }
+    .footer-social-icon svg { width: 16px; height: 16px; fill: #fff; }
+
+    /* Subscribe form */
+    .footer-subscribe-text {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 22px;
+      line-height: 1.6;
+    }
+
+    .footer-subscribe-form { display: flex; flex-direction: column; gap: 12px; }
+
+    .footer-subscribe-input-wrap {
+      display: flex;
+      align-items: center;
+      background: #fff;
+      border-radius: 6px;
+      overflow: hidden;
+      padding: 0 14px;
+      gap: 10px;
+    }
+    .footer-subscribe-input-wrap svg { width: 16px; height: 16px; fill: #aaa; flex-shrink: 0; }
+
+    .footer-subscribe-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      padding: 14px 0;
+      font-family: var(--font-sans);
+      font-size: 0.82rem;
+      color: #333;
+      background: transparent;
+    }
+
+    .footer-subscribe-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--color-rose);
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      font-family: var(--font-sans);
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .footer-subscribe-btn:hover { background: var(--color-rose-dark); }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 24px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .footer-copy { font-size: 0.75rem; color: rgba(255, 255, 255, 0.35); text-align: center; }
+
+    /* ─── Founder section ────────────────────────────────────────────────────── */
+    #founder { background: var(--color-cream); padding: 0; }
+
+    .founder-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 90vh;
+    }
+
+    .founder-body {
+      padding: var(--section-padding-y) var(--section-padding-x);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .founder-body h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+      font-weight: 400;
+      color: var(--color-charcoal);
+      margin-bottom: 32px;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+    }
+
+    .founder-body p {
+      font-size: 0.9rem;
+      line-height: 1.95;
+      color: #555;
+      margin-bottom: 20px;
+    }
+    .founder-body p strong { color: var(--color-charcoal); }
+    .founder-body p:last-child { margin-bottom: 0; }
+
+    .founder-photo {
+      position: relative;
+      overflow: hidden;
+      background: #c8b8a8;
+    }
+    .founder-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+    }
+
+    /* ─── About section (Eventigo style) ────────────────────────────────────── */
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Stacked overlapping images like Eventigo */
+    .about-images {
+      position: relative;
+      height: 520px;
+    }
+
+    .about-img-primary {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 75%;
+      height: 78%;
+      overflow: hidden;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+    }
+    .about-img-primary img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .about-img-secondary {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 65%;
+      height: 62%;
+      overflow: hidden;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.16);
+      border: 4px solid #fff;
+    }
+    .about-img-secondary img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* Stats badge */
+    .about-stats-badge {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--color-offwhite);
+      border: 1px solid rgba(184, 155, 138, 0.2);
+      padding: 20px 24px;
+      text-align: center;
+      z-index: 2;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      min-width: 120px;
+    }
+    .about-stats-badge__icon { font-size: 1.4rem; margin-bottom: 6px; color: var(--color-rose); }
+    .about-stats-badge__num { font-family: var(--font-serif); font-size: 1.8rem; font-weight: 600; color: var(--color-charcoal); display: block; }
+    .about-stats-badge__label { font-size: 0.65rem; letter-spacing: 0.1em; color: #888; text-transform: uppercase; }
+
+    .about-checklist {
+      list-style: none;
+      margin: 22px 0 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .about-checklist li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      color: #555;
+    }
+    .about-checklist li::before {
+      content: '';
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--color-rose);
+      flex-shrink: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 10'%3E%3Cpath d='M1 5l3.5 3.5L11 1' stroke='%23fff' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-size: 10px;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
 
     /* ─── Floating WhatsApp ──────────────────────────────────────────────────── */
     .float-wa {
@@ -919,6 +1073,9 @@
       .site-nav { padding: 22px var(--section-padding-x); }
       .site-nav.is-scrolled { padding: 14px var(--section-padding-x); }
       .about-inner { gap: 50px; }
+      .about-images { height: 400px; }
+      .founder-inner { grid-template-columns: 1fr; }
+      .founder-photo { min-height: 480px; order: -1; }
       .trust-pillars { grid-template-columns: repeat(2, 1fr); gap: 32px; }
       .footer-top { grid-template-columns: 1fr 1fr; gap: 36px; }
     }
@@ -929,15 +1086,16 @@
       .site-nav.is-scrolled { padding: 14px var(--section-padding-x); }
 
       .nav-links,
-      .nav-cta { display: none !important; }
-      .nav-hamburger { display: flex !important; }
+      .nav-cta { display: none; }
+      .nav-hamburger { display: flex; }
 
-      .hero-content { padding: 0 var(--section-padding-x); max-width: 100%; }
-
-      .services-grid { grid-template-columns: 1fr; }
+      .hero-content { padding: 0 var(--section-padding-x) 60px; max-width: 100%; }
 
       .about-inner { grid-template-columns: 1fr; }
-      .about-tag { right: 0; bottom: -16px; }
+      .about-images { height: 340px; }
+      .founder-inner { grid-template-columns: 1fr; }
+      .founder-body { padding: 60px 24px; }
+      .founder-photo { min-height: 400px; }
 
       .portfolio-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 120px; padding: 0 6px; }
       .portfolio-item--a { grid-column: 1/3; grid-row: 1/4;  }
@@ -964,7 +1122,7 @@
   <!-- ── Navigation ──────────────────────────────────────────────────────────── -->
   <nav class="site-nav" id="site-nav">
     <a class="nav-logo" href="#">
-      <img src="images/logo.png" alt="God's Creative Events" id="nav-logo-img" />
+      <img src="images/logo.png" alt="God's Creative Events" />
     </a>
 
     <ul class="nav-links">
@@ -982,77 +1140,87 @@
   </nav>
 
   <!-- ── Hero ────────────────────────────────────────────────────────────────── -->
-  <section id="hero" aria-label="Hero slideshow">
-    <div class="hero-slideshow" id="hero-slideshow">
-      <div class="hero-slide is-active">
-        <div class="hero-slide__bg" style="background-image: url('images/hero-slide-01-luxury-wedding.jpg');"></div>
-        <div class="hero-slide__overlay"></div>
-      </div>
-      <div class="hero-slide">
-        <div class="hero-slide__bg" style="background-image: url('images/hero-slide-02-garden-ceremony.jpg');"></div>
-        <div class="hero-slide__overlay"></div>
-      </div>
-      <div class="hero-slide">
-        <div class="hero-slide__bg" style="background-image: url('images/hero-slide-03-traditional-marriage.jpg');"></div>
-        <div class="hero-slide__overlay"></div>
-      </div>
-      <div class="hero-slide">
-        <div class="hero-slide__bg" style="background-image: url('images/hero-slide-04-birthday-gala.jpg');"></div>
-        <div class="hero-slide__overlay"></div>
-      </div>
-      <div class="hero-slide">
-        <div class="hero-slide__bg" style="background-image: url('images/hero-slide-05-corporate-event.jpg');"></div>
-        <div class="hero-slide__overlay"></div>
+  <section id="hero" aria-label="Hero">
+    <div class="hero__bg"></div>
+    <div class="hero__overlay"></div>
+
+    <div class="hero__content">
+      <span class="hero__pre-heading">Est. Aba, Nigeria — Luxury Events</span>
+      <h1 class="hero__headline">
+        Let's Celebrate Your<br>
+        <span class="hero__cycling-word" aria-live="polite">
+          <span class="hero__cycling-word-inner" id="hero-cycling-word">Luxury Wedding</span>
+        </span>
+      </h1>
+      <p class="hero__subline">Experiences are what shape us. We love creating exceptional celebrations — from conceptualisation to execution — for those who desire the extraordinary.</p>
+      <div class="hero__actions">
+        <a href="#contact" class="btn-primary">Contact Us</a>
+        <a href="https://www.youtube.com/watch?v=wIY1-ULY1N0" class="hero__watch-btn" target="_blank" rel="noopener" aria-label="Watch our intro video">
+          <span class="hero__play-icon">
+            <svg viewBox="0 0 12 14" aria-hidden="true"><path d="M1 1l10 6-10 6V1z"/></svg>
+          </span>
+          Watch Intro
+        </a>
       </div>
     </div>
 
-    <button class="hero-arrow hero-arrow--prev" id="hero-prev" aria-label="Previous slide">&#8592;</button>
-    <button class="hero-arrow hero-arrow--next" id="hero-next" aria-label="Next slide">&#8594;</button>
-
-    <div class="hero-content">
-      <!-- Rotating intro line like Eventigo -->
-      <p class="hero-intro-line">
-        Let's Celebrate Your <span class="hero-rotating-word is-visible" id="hero-rotating-word">Wedding</span>
-      </p>
-      <h1 class="hero-headline">Crafting <em>Timeless</em><br>Celebrations<br>Across Nigeria</h1>
-      <p class="hero-subline">From luxury weddings to traditional ceremonies — curated for those who desire the extraordinary.</p>
-      <div class="hero-actions">
-        <a href="#contact" class="btn-primary">Book a Consultation</a>
-        <a href="#portfolio" class="btn-ghost">View Our Portfolio</a>
-      </div>
-    </div>
-
-    <div class="hero-dots" id="hero-dots"></div>
-
-    <div class="hero-scroll-indicator" aria-hidden="true">
+    <div class="hero__scroll-cue" aria-hidden="true">
       <span>Scroll</span>
-      <div class="hero-scroll-indicator__line"></div>
+      <div class="hero__scroll-cue__line"></div>
     </div>
   </section>
 
   <!-- ── About ────────────────────────────────────────────────────────────────── -->
   <section id="about">
     <div class="about-inner">
-      <div class="about-image-wrap reveal">
-        <div class="about-img">
-          <img src="images/about-portrait.jpg" alt="God's Creative Events team at work" />
+
+      <!-- Stacked images — Eventigo style -->
+      <div class="about-images reveal">
+        <div class="about-img-primary">
+          <img src="images/about-portrait.jpg" alt="God's Creative Events at work" />
         </div>
-        <div class="about-tag">
-          <span class="about-tag__label">Since 2014</span>
-          Crafted with devotion.
+        <div class="about-img-secondary">
+          <img src="images/about-portrait-2.jpg" alt="A celebration we created" />
+        </div>
+        <div class="about-stats-badge">
+          <div class="about-stats-badge__icon">★</div>
+          <span class="about-stats-badge__num">10+</span>
+          <span class="about-stats-badge__label">Years of Experience</span>
         </div>
       </div>
 
       <div class="about-body">
-        <span class="eyebrow reveal">Our Story</span>
-        <h2 class="section-headline reveal reveal--delay-1">Where <em>Vision</em><br>Becomes Memory</h2>
+        <span class="eyebrow reveal">About God's Creative Events</span>
+        <h2 class="section-headline reveal reveal--delay-1">We are a perfect blend of <em>passion, energy, creativity</em> and an eye for detail</h2>
         <div class="reveal reveal--delay-2">
-          <p>We began God's Creative Events with a single belief: that every celebration deserves to feel completely singular — woven from the fabric of who you are, what you love, and the love you are celebrating.</p>
-          <p>From our home in Aba, we have journeyed with families across the Southeast, Lagos, Abuja, and beyond — orchestrating weddings, traditional ceremonies, and corporate milestones that our clients still call the most beautiful days of their lives.</p>
-          <p>We do not work from templates. We begin with conversation. We listen for the details others overlook — the mother's favourite flower, the couple's first song, the colour that makes a grandmother smile — and we build an entire world around those truths.</p>
-          <p>At God's Creative Events, luxury is not a price point. It is care made visible.</p>
-          <p class="about-signature">— God's Creative Events</p>
+          <p>Experiences are what shape us. We love creating exceptional celebrations — from conceptualisation to execution — building unique moments that linger in the hearts of every guest.</p>
+          <ul class="about-checklist">
+            <li>Best Quality Services</li>
+            <li>100% Satisfaction Guarantee</li>
+            <li>Quality Control System</li>
+            <li>Commitment to Clients</li>
+            <li>Highly Professional Team</li>
+          </ul>
+          <a href="#contact" class="btn-primary">About Us</a>
         </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Meet Our Founder ──────────────────────────────────────────────────────── -->
+  <section id="founder">
+    <div class="founder-inner">
+      <div class="founder-body reveal">
+        <h2>Meet Our Founder</h2>
+        <p>I'm <strong>the Founder and Creative Director</strong> of God's Creative Events.</p>
+        <p>My journey as an event planner and decorator has been driven by a deep passion for crafting unforgettable experiences and relieving our clients of the burden of event planning. I've invested not only time and effort but also a substantial amount of dedication to learning from the best — ensuring every event we touch becomes a story worth telling.</p>
+        <p>This unwavering commitment to delivering top-notch event services has firmly established God's Creative Events as one of Aba's foremost and most preferred event companies.</p>
+        <p>My mission is clear: to create experiences that captivate, inspire, and thrill both our clients and their guests. I strongly believe in the transformative power of bringing people together, and I'm wholeheartedly dedicated to designing events that mirror each client's unique vision.</p>
+        <p>We are here to help you make a lasting impression that lingers in the hearts and minds of all who attend.</p>
+      </div>
+      <div class="founder-photo reveal reveal--delay-1">
+        <img src="images/founder-portrait.jpg" alt="Founder of God's Creative Events" />
       </div>
     </div>
   </section>
@@ -1064,48 +1232,48 @@
       <h2 class="section-headline">A Curated Suite<br>of <em>Services</em></h2>
     </div>
 
-    <div class="services-grid">
-      <div class="service-card service-card--featured reveal">
-        <div class="service-card__icon-wrap">
-          <span class="service-card__icon">💍</span>
+    <div class="services-list">
+      <div class="service-item reveal">
+        <div class="service-item__num">I</div>
+        <div>
+          <h3 class="service-item__title">Luxury Wedding Planning</h3>
+          <p class="service-item__desc">Full-service wedding management from concept to execution — venue sourcing, vendor curation, timeline design, and day-of orchestration. We handle every thread so you may be fully present for the moments that matter.</p>
         </div>
-        <h3 class="service-card__title">Luxury Wedding Planning</h3>
-        <p class="service-card__desc">Full-service wedding management from concept to execution — venue sourcing, vendor curation, timeline design, and day-of orchestration.</p>
       </div>
-      <div class="service-card reveal reveal--delay-1">
-        <div class="service-card__icon-wrap">
-          <span class="service-card__icon">🎊</span>
+      <div class="service-item reveal reveal--delay-1">
+        <div class="service-item__num">II</div>
+        <div>
+          <h3 class="service-item__title">Traditional Marriage Ceremonies</h3>
+          <p class="service-item__desc">Honouring your culture with the depth it deserves. We design Igbo, Yoruba, and cross-cultural traditional ceremonies that are visually magnificent and deeply rooted in meaning — where heritage meets grandeur.</p>
         </div>
-        <h3 class="service-card__title">Traditional Marriage Ceremonies</h3>
-        <p class="service-card__desc">Honouring your culture with the depth it deserves. Igbo, Yoruba, and cross-cultural ceremonies rooted in meaning and grandeur.</p>
       </div>
-      <div class="service-card reveal reveal--delay-2">
-        <div class="service-card__icon-wrap">
-          <span class="service-card__icon">🌸</span>
+      <div class="service-item reveal reveal--delay-2">
+        <div class="service-item__num">III</div>
+        <div>
+          <h3 class="service-item__title">Event Decoration & Design</h3>
+          <p class="service-item__desc">From intimate dinners to reception halls for a thousand guests — every space we design tells a story. Floral installations, drapery, lighting, table settings, and stage architecture executed to the finest detail.</p>
         </div>
-        <h3 class="service-card__title">Event Decoration & Design</h3>
-        <p class="service-card__desc">Floral installations, drapery, lighting and stage architecture — every space we design tells a story, executed to the finest detail.</p>
       </div>
-      <div class="service-card reveal">
-        <div class="service-card__icon-wrap">
-          <span class="service-card__icon">🏆</span>
+      <div class="service-item reveal">
+        <div class="service-item__num">IV</div>
+        <div>
+          <h3 class="service-item__title">Corporate Event Experiences</h3>
+          <p class="service-item__desc">Product launches, award ceremonies, executive retreats, and gala dinners. We bring the same elegance and precision to your brand's milestones as we do to our most intimate weddings.</p>
         </div>
-        <h3 class="service-card__title">Corporate Event Experiences</h3>
-        <p class="service-card__desc">Product launches, award ceremonies, executive retreats, and gala dinners delivered with elegance and precision.</p>
       </div>
-      <div class="service-card reveal reveal--delay-1">
-        <div class="service-card__icon-wrap">
-          <span class="service-card__icon">🎂</span>
+      <div class="service-item reveal reveal--delay-1">
+        <div class="service-item__num">V</div>
+        <div>
+          <h3 class="service-item__title">Birthday Celebrations</h3>
+          <p class="service-item__desc">From intimate milestone gatherings to opulent birthday parties, we design celebrations that reflect a personality — lavish, considered, and entirely unforgettable.</p>
         </div>
-        <h3 class="service-card__title">Birthday Celebrations</h3>
-        <p class="service-card__desc">From intimate milestone gatherings to opulent birthday parties — lavish, considered, and entirely unforgettable.</p>
       </div>
-      <div class="service-card reveal reveal--delay-2">
-        <div class="service-card__icon-wrap">
-          <span class="service-card__icon">🍽️</span>
+      <div class="service-item reveal reveal--delay-2">
+        <div class="service-item__num">VI</div>
+        <div>
+          <h3 class="service-item__title">Outdoor & Premium Catering</h3>
+          <p class="service-item__desc">Cuisine curated for discerning guests. Our catering service blends Nigerian culinary heritage with continental presentation — plated dinners, cocktail receptions, and buffet spreads of uncompromising quality.</p>
         </div>
-        <h3 class="service-card__title">Outdoor & Premium Catering</h3>
-        <p class="service-card__desc">Nigerian culinary heritage with continental presentation — plated dinners, cocktail receptions, and buffet spreads of uncompromising quality.</p>
       </div>
     </div>
   </section>
@@ -1332,48 +1500,73 @@
   <!-- ── Footer ─────────────────────────────────────────────────────────────────── -->
   <footer class="site-footer">
     <div class="footer-top">
+
+      <!-- Brand -->
       <div class="footer-logo">
         <a href="#"><img src="images/logo.png" alt="God's Creative Events" /></a>
-        <p class="footer-tagline">Luxury wedding planning, traditional ceremonies, event decoration and premium catering. Crafting timeless celebrations across Nigeria since 2014.</p>
+        <p class="footer-tagline">We love creating exceptional celebrations. From conceptualisation to execution — crafting timeless moments across Nigeria since 2014.</p>
       </div>
 
+      <!-- Quick links -->
       <div>
-        <p class="footer-col-title">Navigation</p>
+        <p class="footer-col-title">Quick links</p>
         <ul class="footer-nav-list">
-          <li><a href="#about">About Us</a></li>
-          <li><a href="#services">Services</a></li>
+          <li><a href="#">Home</a></li>
+          <li><a href="#about">About</a></li>
           <li><a href="#portfolio">Portfolio</a></li>
-          <li><a href="#testimonials">Client Stories</a></li>
           <li><a href="#contact">Contact</a></li>
+          <li><a href="#services">Services</a></li>
         </ul>
       </div>
 
+      <!-- Connect -->
       <div>
-        <p class="footer-col-title">Services</p>
-        <ul class="footer-nav-list">
-          <li><a href="#services">Wedding Planning</a></li>
-          <li><a href="#services">Traditional Ceremonies</a></li>
-          <li><a href="#services">Event Decoration</a></li>
-          <li><a href="#services">Corporate Events</a></li>
-          <li><a href="#services">Catering</a></li>
-        </ul>
+        <p class="footer-col-title">Connect with us</p>
+        <a class="footer-connect-item" href="tel:+2348030000000">
+          <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+          +234 803 000 0000
+        </a>
+        <a class="footer-connect-item" href="mailto:hello@godscreativeevents.ng">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          hello@godscreativeevents.ng
+        </a>
+
+        <div class="footer-social-icons">
+          <a class="footer-social-icon" href="#" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a class="footer-social-icon" href="#" aria-label="Facebook">
+            <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a class="footer-social-icon" href="#" aria-label="Twitter / X">
+            <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a class="footer-social-icon" href="#" aria-label="YouTube">
+            <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </a>
+          <a class="footer-social-icon" href="#" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+        </div>
       </div>
 
+      <!-- Subscribe -->
       <div>
-        <p class="footer-col-title">Contact</p>
-        <p class="footer-contact-item">Aba, Abia State<br>Nigeria</p>
-        <p class="footer-contact-item">+234 803 000 0000</p>
-        <p class="footer-contact-item">hello@godscreativeevents.ng</p>
+        <p class="footer-col-title">Subscribe to us</p>
+        <p class="footer-subscribe-text">Get access to premium content and exclusive updates.</p>
+        <div class="footer-subscribe-form">
+          <div class="footer-subscribe-input-wrap">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            <input class="footer-subscribe-input" type="email" placeholder="Your email address" aria-label="Email address" />
+          </div>
+          <button class="footer-subscribe-btn" type="button">Sign Up</button>
+        </div>
       </div>
+
     </div>
 
     <div class="footer-bottom">
-      <p class="footer-copy">© 2025 God's Creative Events. All rights reserved.</p>
-      <div class="footer-socials">
-        <a href="#">Instagram</a>
-        <a href="#">Facebook</a>
-        <a href="#">WhatsApp</a>
-      </div>
+      <p class="footer-copy">© 2025 God's Creative Events. All Rights Reserved.</p>
     </div>
   </footer>
 
@@ -1394,172 +1587,147 @@
     'use strict';
 
     // ─── Nav scroll state ─────────────────────────────────────────────────────────
-    var nav = document.getElementById('site-nav');
-    var navLogoImg = document.getElementById('nav-logo-img');
-    navLogoImg.src = 'images/logo.png';
+    const nav = document.getElementById('site-nav');
 
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', () => {
       nav.classList.toggle('is-scrolled', window.scrollY > 60);
     }, { passive: true });
 
     // ─── Scroll-reveal ────────────────────────────────────────────────────────────
-    var revealObserver = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('is-visible');
-        revealObserver.unobserve(entry.target);
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(({ target, isIntersecting }) => {
+        if (!isIntersecting) return;
+        target.classList.add('is-visible');
+        revealObserver.unobserve(target);
       });
     }, { threshold: 0.12 });
 
-    document.querySelectorAll('.reveal').forEach(function(el) {
-      revealObserver.observe(el);
-    });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-    // ─── Hero slideshow ───────────────────────────────────────────────────────────
-    var slides     = Array.prototype.slice.call(document.querySelectorAll('.hero-slide'));
-    var dotsWrap   = document.getElementById('hero-dots');
-    var heroAutoplay;
-    var heroCurrent = 0;
+    // ─── Hero cycling word ────────────────────────────────────────────────────────
+    const heroCyclingWord = (() => {
+      const words   = ['Luxury Wedding', 'Traditional Ceremony', 'Birthday Celebration', 'Corporate Gala', 'Garden Wedding', 'Anniversary'];
+      const wordEl  = document.getElementById('hero-cycling-word');
+      let   current = 0;
 
-    var heroDots = slides.map(function(_, i) {
-      var dot = document.createElement('div');
-      dot.className = 'hero-dot' + (i === 0 ? ' is-active' : '');
-      dot.addEventListener('click', function() { heroGoTo(i); });
-      dotsWrap.appendChild(dot);
-      return dot;
-    });
+      function next() {
+        const nextIndex = (current + 1) % words.length;
 
-    function heroGoTo(index) {
-      slides[heroCurrent].classList.remove('is-active');
-      heroDots[heroCurrent].classList.remove('is-active');
-      heroCurrent = (index + slides.length) % slides.length;
-      slides[heroCurrent].classList.add('is-active');
-      heroDots[heroCurrent].classList.add('is-active');
-      clearInterval(heroAutoplay);
-      heroAutoplay = setInterval(function() { heroGoTo(heroCurrent + 1); }, 6000);
-    }
+        // Animate current word out
+        wordEl.classList.add('is-leaving');
 
-    document.getElementById('hero-prev').addEventListener('click', function() { heroGoTo(heroCurrent - 1); });
-    document.getElementById('hero-next').addEventListener('click', function() { heroGoTo(heroCurrent + 1); });
+        wordEl.addEventListener('animationend', function onLeave() {
+          wordEl.removeEventListener('animationend', onLeave);
+          wordEl.classList.remove('is-leaving');
 
-    heroAutoplay = setInterval(function() { heroGoTo(heroCurrent + 1); }, 6000);
+          // Swap text and animate in
+          current = nextIndex;
+          wordEl.textContent = words[current];
+          wordEl.classList.add('is-entering');
 
-    // ─── Hero rotating words ──────────────────────────────────────────────────────
-    var rotatingWords  = ['Wedding', 'Birthday', 'Traditional Ceremony', 'Corporate Event', 'Anniversary'];
-    var rotatingEl     = document.getElementById('hero-rotating-word');
-    var rotatingIndex  = 0;
+          wordEl.addEventListener('animationend', function onEnter() {
+            wordEl.removeEventListener('animationend', onEnter);
+            wordEl.classList.remove('is-entering');
+          }, { once: true });
+        }, { once: true });
+      }
 
-    setInterval(function() {
-      rotatingEl.classList.remove('is-visible');
-      setTimeout(function() {
-        rotatingIndex = (rotatingIndex + 1) % rotatingWords.length;
-        rotatingEl.textContent = rotatingWords[rotatingIndex];
-        rotatingEl.classList.add('is-visible');
-      }, 500);
-    }, 2800);
+      setInterval(next, 2800);
+    })();
 
     // ─── Testimonial slider ───────────────────────────────────────────────────────
-    var testSlides   = Array.prototype.slice.call(document.querySelectorAll('.testimonial-slide'));
-    var testDotsWrap = document.getElementById('testimonial-dots');
-    var testCurrent  = 0;
+    const testimonialSlider = (() => {
+      const slides   = [...document.querySelectorAll('.testimonial-slide')];
+      const dotsWrap = document.getElementById('testimonial-dots');
 
-    var testDots = testSlides.map(function(_, i) {
-      var dot = document.createElement('div');
-      dot.className = 'testimonial-dot' + (i === 0 ? ' is-active' : '');
-      dot.addEventListener('click', function() { testGoTo(i); });
-      testDotsWrap.appendChild(dot);
-      return dot;
-    });
+      let current = 0;
 
-    function testGoTo(index) {
-      testSlides[testCurrent].classList.remove('is-active');
-      testDots[testCurrent].classList.remove('is-active');
-      testCurrent = index;
-      testSlides[testCurrent].classList.add('is-active');
-      testDots[testCurrent].classList.add('is-active');
-    }
+      const dots = slides.map((_, i) => {
+        const dot = document.createElement('div');
+        dot.className = 'testimonial-dot' + (i === 0 ? ' is-active' : '');
+        dot.addEventListener('click', () => goTo(i));
+        dotsWrap.appendChild(dot);
+        return dot;
+      });
 
-    setInterval(function() { testGoTo((testCurrent + 1) % testSlides.length); }, 5500);
+      function goTo(index) {
+        slides[current].classList.remove('is-active');
+        dots[current].classList.remove('is-active');
+        current = index;
+        slides[current].classList.add('is-active');
+        dots[current].classList.add('is-active');
+      }
+
+      setInterval(() => goTo((current + 1) % slides.length), 5500);
+
+      return { goTo };
+    })();
 
     // ─── Lightbox ─────────────────────────────────────────────────────────────────
-    var lightboxEl    = document.getElementById('lightbox');
-    var lightboxImg   = document.getElementById('lightbox-img');
-    var lightboxClose = document.getElementById('lightbox-close');
+    const lightbox = (() => {
+      const el    = document.getElementById('lightbox');
+      const img   = document.getElementById('lightbox-img');
+      const close = document.getElementById('lightbox-close');
 
-    function openLightbox(src, alt) {
-      lightboxImg.src = src;
-      lightboxImg.alt = alt || '';
-      lightboxEl.classList.add('is-open');
-      document.body.style.overflow = 'hidden';
-    }
+      function open(src, alt) {
+        img.src = src;
+        img.alt = alt || '';
+        el.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+      }
 
-    function closeLightbox() {
-      lightboxEl.classList.remove('is-open');
-      document.body.style.overflow = '';
-      lightboxImg.src = '';
-    }
+      function closeLightbox() {
+        el.classList.remove('is-open');
+        document.body.style.overflow = '';
+        img.src = '';
+      }
 
-    lightboxClose.addEventListener('click', closeLightbox);
-    lightboxEl.addEventListener('click', function(e) { if (e.target === lightboxEl) closeLightbox(); });
-    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLightbox(); });
+      close.addEventListener('click', closeLightbox);
+      el.addEventListener('click', (e) => { if (e.target === el) closeLightbox(); });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
 
-    document.querySelectorAll('.portfolio-item[data-src]').forEach(function(item) {
-      item.addEventListener('click', function() {
-        openLightbox(item.dataset.src, item.dataset.alt);
+      return { open };
+    })();
+
+    // Wire portfolio items to lightbox via data attributes — no inline onclick
+    document.querySelectorAll('.portfolio-item[data-src]').forEach(item => {
+      item.addEventListener('click', () => {
+        lightbox.open(item.dataset.src, item.dataset.alt);
       });
     });
 
     // ─── Enquiry form → WhatsApp ──────────────────────────────────────────────────
-    document.getElementById('form-submit').addEventListener('click', function() {
-      var name      = document.getElementById('field-name').value.trim();
-      var eventType = document.getElementById('field-event').value;
-      var date      = document.getElementById('field-date').value.trim();
+    document.getElementById('form-submit').addEventListener('click', () => {
+      const name      = document.getElementById('field-name').value.trim();
+      const eventType = document.getElementById('field-event').value;
+      const date      = document.getElementById('field-date').value.trim();
 
       if (!name || !eventType) {
         alert('Please fill in your name and event type to continue.');
         return;
       }
 
-      var message = encodeURIComponent(
-        "Hello! I'd like to enquire about your " + eventType + " services.\n" +
-        "My name is " + name + ".\n" +
-        "Preferred date: " + (date || 'TBD')
-      );
+      const message = [
+        `Hello! I'd like to enquire about your ${eventType} services.`,
+        `My name is ${name}.`,
+        `Preferred date: ${date || 'TBD'}`,
+      ].map(encodeURIComponent).join('%0A');
 
-      window.open('https://wa.me/2348030000000?text=' + message, '_blank');
+      window.open(`https://wa.me/2348030000000?text=${message}`, '_blank');
     });
 
     // ─── Mobile menu ──────────────────────────────────────────────────────────────
-    var hamburger   = document.getElementById('nav-hamburger');
-    var drawer      = document.getElementById('mobile-nav-drawer');
-    var drawerClose = document.getElementById('mobile-nav-close');
+    document.getElementById('nav-hamburger').addEventListener('click', () => {
+      const links = document.querySelector('.nav-links');
+      const cta   = document.querySelector('.nav-cta');
+      const isOpen = links.style.display === 'flex';
 
-    function openDrawer() {
-      drawer.classList.add('is-open');
-      document.body.style.overflow = 'hidden';
-    }
-    function closeDrawer() {
-      drawer.classList.remove('is-open');
-      document.body.style.overflow = '';
-    }
+      links.style.cssText = isOpen
+        ? ''
+        : 'display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:rgba(255,246,237,0.98);padding:24px 32px;gap:18px;box-shadow:0 8px 32px rgba(28,28,28,0.12);z-index:99;';
 
-    hamburger.addEventListener('click', openDrawer);
-    drawerClose.addEventListener('click', closeDrawer);
-
-    document.querySelectorAll('.mobile-nav-link, .mobile-cta').forEach(function(link) {
-      link.addEventListener('click', closeDrawer);
+      if (cta) cta.style.display = isOpen ? '' : 'none';
     });
   </script>
-  <!-- ── Mobile Nav Drawer ──────────────────────────────────────────────────────── -->
-  <div class="mobile-nav-drawer" id="mobile-nav-drawer">
-    <button class="mobile-nav-close" id="mobile-nav-close" aria-label="Close menu">&times;</button>
-    <a href="#about" class="mobile-nav-link">About</a>
-    <a href="#services" class="mobile-nav-link">Services</a>
-    <a href="#portfolio" class="mobile-nav-link">Portfolio</a>
-    <a href="#testimonials" class="mobile-nav-link">Stories</a>
-    <a href="#contact" class="mobile-nav-link">Contact</a>
-    <a href="#contact" class="mobile-cta">Book Consultation</a>
-  </div>
-
 </body>
 </html>
